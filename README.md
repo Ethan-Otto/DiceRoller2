@@ -1,1 +1,2 @@
-# Milestone 3 Changes
+# DiceRoller2
+Dice Roller Web Application

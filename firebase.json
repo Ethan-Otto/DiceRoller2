@@ -1,0 +1,29 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "y"
+  },
+  
+ "hosting": {
+   "public":"public",
+  "rewrites": [ {
+    "source": "**",
+    "function": "app"
+    } ]
+  },
+
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "emulators": {
+    
+    "hosting": {
+      "port": 5005,
+      "host": "0.0.0.0"
+    }
+
+  },
+  "functions": {
+    "source": "functions"
+  }
+}

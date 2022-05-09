@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+
+</head>
+
+<body>
+  <header>
+    <%- include('../partials/nav', { email: user.email }) %>
+  </header>
+  <h1>This is the FrontPage</h1>
+
+  <a href = "/show_rolls" <button class="button is-large is-fullwidth">Dice Library</button></a>
+  <a href = "/create_roll" <button class="button is-large is-fullwidth">Create Roll</button></a>
+
+</body>
+
+<%- include('../partials/footer') %>
+
+</html>

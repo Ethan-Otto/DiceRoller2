@@ -10,18 +10,50 @@
     <%- include('../partials/nav', { hideSignIn: true }) %>
   </header>
 
+  <p class="is-size-2 has-text-centered" >Login</p>
+  
 
   <form id="login-form">
-    <input type="text" name="login" placeholder="Your user name" />
-    <input type="password" name="password" id="password" />
-    <button>
-      Sign In
-    </button>
-    <div id="login-error">
 
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control has-icons-left has-icons-right">
+      <input class="input " name = "login" type="email" placeholder="Email input" value="hello@">
+      <span class="icon is-small is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
+      
     </div>
+    
+  </div>
+  
+  <div class="field">
+    <label class="label">Password</label>
+    <div class="control has-icons-left">
+      <input class="input" name="password" type="password">
+      <span class="icon is-small is-left">
+        <i class="fas fa-lock"></i>
+      </span>
     </div>
-  </form>
+  </div>
+  
+  
+  <div class="field is-grouped is-centered has-text-centered">
+    <div class="control">
+      <button class="button is-link">Submit</button>
+    </div>
+    
+  </div>
+</form>
+
+<div class ="has-text-centered">
+  <a class="button has-text-centered is-small" href="/sign-up">
+    No Account? Click Here</a>
+</div>
+
+  <div id="login-error ">
+
+  </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
@@ -37,17 +69,15 @@
 
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
-
-      apiKey: "AIzaSyB-aKt9miX0iPmj8DpN0SZ2ilKX26lsm3s",
-      authDomain: "ruffhouse-511e0.firebaseapp.com",
-      projectId: "ruffhouse-511e0",
-      storageBucket: "ruffhouse-511e0.appspot.com",
-      messagingSenderId: "141768514614",
-      appId: "1:141768514614:web:2fd9edaa781339cd5ecc97",
-      measurementId: "G-LM1RSY4LGC"
-
+      apiKey: "AIzaSyAu9G_eAw6jwpQM9QE93GhYep7b1MgJAM4",
+      authDomain: "roller-revamp.firebaseapp.com",
+      projectId: "roller-revamp",
+      storageBucket: "roller-revamp.appspot.com",
+      messagingSenderId: "1051670949865",
+      appId: "1:1051670949865:web:41902a251bfbf54a686578"
     };
 
+    console.log('loaded', 'it is loaded')
     const app = firebase.initializeApp(firebaseConfig);
 
     app.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
@@ -57,6 +87,7 @@
       .addEventListener("submit", async (event) => {
         event.preventDefault();
         const login = event.target.login.value;
+        console.log('login', login)
         const password = event.target.password.value;
 
         // CS5356 TODO #3
@@ -67,20 +98,23 @@
         try {
           const userCredential = await app.auth().signInWithEmailAndPassword(login, password);
           const user = userCredential.user;
-          const idToken = await user.getIdToken()
+          const idToken = await user.getIdToken();
           // Start a new session with User's IdToken
-          await fetch('/sessionLogin', {
+          console.log('user and token',user, idToken)
+          await fetch('./sessionLogin', {
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ idToken })
           });
           // Redirect to Dashboard
-          window.location.href = '/dashboard'
+          window.location.href = './dashboard'
 
         } catch (err){
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorCode, errorMessage)
+        
+          
         }
         
     });

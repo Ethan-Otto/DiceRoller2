@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+ 
+</head>
+
+<body>
+  <header>
+    <%- include('../partials/nav', { email: user.email }) %>
+  </header>
+
+  
+
+  <p class="is-size-3 has-text-centered" >Dice Library</p>
+  <div class ="has-text-centered">
+    <a class="button has-text-centered is-small" href="/create_roll">Save A New Roll</a>
+  </div>
+  
+  <% 
+  const static_dice = [4,6,8,10,12,20]
+  const rolls = ['/r d4','/r d6', '/r d8', '/r d10', '/r d12', '/r d20']
+  const names = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100']
+  const parts = 
+  [["mdi:dice-d4" ,"color:#ec3d3d;"],
+  ["mdi:dice-d6" ,"color:#356a2d;"],
+  ["mdi:dice-d8" ,"color:#2232c3;"],
+  ["mdi:dice-d10" ,"color:#d27f1e;"],
+  ["mdi:dice-d12" ,"color:#962626;"],
+  ["mdi:dice-d20" ,"color:#9600a3;"]
+];
+ 
+  
+  const icons = ['<span class="iconify" data-icon="mdi:dice-d4" style="color: #ec3d3d;"></span>',
+  '<span class="iconify" data-icon="mdi:dice-d6" style="color: #356a2d;"></span>',
+  '<span class="iconify" data-icon="mdi:dice-d10" style="color: #d27f1e;"></span>',
+  '<span class="iconify" data-icon="mdi:dice-d12" style="color: #962626;"></span>',
+  '<span class="iconify" data-icon="mdi:dice-d20" style="color: #9600a3;"></span>;'
+    ]
+
+  for (let i = 0; i < rolls.length; i++){ 
+    var part = parts[i] %>
+    <% if (i % 2 == 0){ 
+      %> 
+      <div class = 'columns is-mobile is-centered'>
+    <% } %>
+  <div class= 'column has-text-centered'>
+  <div class="card-content box">
+   
+  <div class="media is-inline-block">
+    <div <%= 'id =' + "die" 
+      + "  " + 'roll = ' + String(rolls[i].replace(/ /g,'')) %>
+        class="js-modal-trigger" data-target="modal-js-example">
+      <figure  class="image is-inline-block ">
+        <!-- <img class="is-rounded" src="/static/d20.jpg" /> -->
+        <span class="iconify" data-icon= <%= part[0] %> style= <%= part[1] %> data-width="48" data-height="48" ></span>
+
+      </figure>
+  </div>
+ 
+  </div>
+ 
+  </div>
+  </div>
+  <% if (i % 2 == 1){%></div><% } %>
+
+  <% } %>
+
+<!-- USER DEFINED ROLLS -->
+
+  <% for (let i = 0; i < data_list.length; i++){
+     data = data_list[i];
+     if (!('icon' in data)){
+        data.icon = 'fa-solid:dice-d20';
+      }
+     console.log(data_list); %>
+
+  <% if (i % 2 == 0){ %> 
+      <div class = 'columns is-mobile is-centered'>
+    <% } %>
+    <div class= 'column has-text-centered'>
+    <div class="card-content box">
+      <div class="media is-inline-block">
+        <div <%= 'id =' + "die" %> <%= 'roll = ' + String(data.roll.replace(/ /g,'')) %> class="js-modal-trigger" data-target="modal-js-example">
+          <figure  class="image is-48x48 is-inline-block">
+            <!-- <img class="is-rounded" src="/static/d20.jpg" /> -->
+            <span class="iconify" data-icon= <%= data.icon %> data-width="48" data-height="48" ></span>
+          </figure>
+        </div>
+        <div class="media-content ">
+          <p class="title is-4">
+            <%= data.name %>
+          </p>
+          <p class="subtitle is-6">
+            <%= data.roll %>
+          </p>
+
+          
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <% if (i % 2 == 2-1){%></div><% } %>
+    <% } %>
+
+    <div id="modal-js-example" class="modal">
+      <div class="modal-background"></div>
+    
+      <div class="modal-content">
+        <div class="box ">
+          <div id="demo" class ='is-size-1 ' style="text-align:center"></div>
+          
+          <!-- Your content -->
+        </div>
+      </div>
+    
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+
+<script src = "/static/script_helpers/math.js"></script>
+<script>
+//const decoder = require("./app/decoder");
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Functions to open and close a modal
+  function openModal($el) {
+    $el.classList.add('is-active');
+  }
+
+  function closeModal($el) {
+    $el.classList.remove('is-active');
+  }
+
+  function closeAllModals() {
+    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+      closeModal($modal);
+    });
+  }
+
+  // Add a click event on buttons to open a specific modal
+  (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+    const modal = $trigger.dataset.target;
+    const $target = document.getElementById(modal);
+    console.log($target);
+
+    $trigger.addEventListener('click', () => {
+      openModal($target);
+    });
+  });
+
+  // Add a click event on various child elements to close the parent modal
+  (document.querySelectorAll('.modal-background, .modal-content, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+    const $target = $close.closest('.modal');
+
+    $close.addEventListener('click', () => {
+      closeModal($target);
+    });
+  });
+
+  // Add a keyboard event to close all modals
+  document.addEventListener('keydown', (event) => {
+    const e = event || window.event;
+
+    if (e.keyCode === 27) { // Escape key
+      closeAllModals();
+    }
+  });
+});
+
+
+
+
+ const buttons = document.querySelectorAll("#die");
+ buttons.forEach(function(die) {
+  var roll = die.getAttribute('roll');
+  console.log(die)
+
+  die.addEventListener("click", function(){
+    var roll = die.getAttribute('roll');
+    document.getElementById("demo").innerHTML = decodeSum(roll)
+  });
+});
+
+
+
+
+var die = document.getElementById("die");
+var roll = die.getAttribute('roll');
+console.log(die)
+
+die.addEventListener("click", function(){
+  var roll = die.getAttribute('roll');
+  document.getElementById("demo").innerHTML = decodeSum(roll)
+});
+
+function displayRoll() {
+  //console.log(roll)
+  document.getElementById("demo").innerHTML = decodeSum(roll);
+}
+</script>
+
+    
+</body>
+
+<%- include('../partials/footer') %>
+
+</html>

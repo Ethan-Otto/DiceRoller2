@@ -2,4 +2,4 @@
 
 Was previously working in Vue and Nuxt but due to issues with CRUD databases it was scraped.
 I'll be reverting to ExpressJS and expand Ruffhouse's server handling. 
-Alsouse bulma for my styling. 
+Also use bulma for my styling. 

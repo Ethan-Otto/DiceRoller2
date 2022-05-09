@@ -1,0 +1,15 @@
+POST http://localhost:5000/create_roll HTTP/1.1
+content-type: application/json
+
+{
+"action": 
+{
+  "userid" : "aj12",
+  "name" : "cold cone",
+  "roll" : "20d6",
+  "iconid" : "sword",
+  "position" : 1
+}
+
+}
+#GET http://localhost:4000/ HTTP/1.1

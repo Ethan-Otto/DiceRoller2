@@ -10,19 +10,55 @@
     <%- include('../partials/nav') %>
   </header>
 
-  <div class="container">
-    Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
-    <form id="login-form">
-      <label>Login</label>
-      <input id="login" type="text" name="login" />
-      <label>Password</label>
-      <input type="password" name="password" />
-      <button>Log in</button>
-    </form>
-    <div id="login-error" style="display: none;">
+    
+
+
+  <p class="is-size-2 has-text-centered" >Sign-Up</p>
+  
+
+  <form id="login-form">
+
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control has-icons-left has-icons-right">
+      <input class="input " name = "login" type="email" placeholder="Email input" value="hello@">
+      <span class="icon is-small is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
+      
     </div>
-    <a href="/dashboard">Dashboard</a>
+    
   </div>
+  
+  <div class="field">
+    <label class="label">Password</label>
+    <div class="control has-icons-left">
+      <input class="input" name="password" type="password">
+      <span class="icon is-small is-left">
+        <i class="fas fa-lock"></i>
+      </span>
+    </div>
+  </div>
+  
+  
+  <div class="field is-grouped is-centered has-text-centered">
+    <div class="control">
+      <button class="button is-link">Submit</button>
+    </div>
+    
+  </div>
+</form>
+
+<div class ="has-text-centered">
+  <a class="button has-text-centered is-small" href="/sign-in">
+    Have An Account? Click Here</a>
+</div>
+
+
+<div id="login-error" style="display: none;">
+</div>
+
+  
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
@@ -33,13 +69,12 @@
   window.onload = () => {
     console.log('Running onload')
     const firebaseConfig = {
-      apiKey: "AIzaSyB-aKt9miX0iPmj8DpN0SZ2ilKX26lsm3s",
-      authDomain: "ruffhouse-511e0.firebaseapp.com",
-      projectId: "ruffhouse-511e0",
-      storageBucket: "ruffhouse-511e0.appspot.com",
-      messagingSenderId: "141768514614",
-      appId: "1:141768514614:web:2fd9edaa781339cd5ecc97",
-      measurementId: "G-LM1RSY4LGC"
+      apiKey: "AIzaSyAu9G_eAw6jwpQM9QE93GhYep7b1MgJAM4",
+      authDomain: "roller-revamp.firebaseapp.com",
+      projectId: "roller-revamp",
+      storageBucket: "roller-revamp.appspot.com",
+      messagingSenderId: "1051670949865",
+      appId: "1:1051670949865:web:41902a251bfbf54a686578"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
@@ -69,38 +104,17 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ idToken })
           });
-          window.location.href = '/dashboard'
+          window.location.href = './dashboard'
 
+          
         } catch (error) {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorCode, errorMessage)
+          //res.render('error', { error: error })
         }
         
 
-        // app.auth().createUserWithEmailAndPassword(login, password)
-        //   .then((userCredential) => {
-        //     // Signed in 
-        //     const user = userCredential.user;
-
-        //     user.getIdToken().then((idToken) => {
-        //       // Manage it Server Side
-        //       fetch('/sessionLogin', {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify({ idToken })
-        //       }).then(() => {
-        //         window.location.href = '/dashboard'
-        //       })
-        //     })
-        //       .catch((error) => {
-        //         const errorCode = error.code;
-        //         const errorMessage = error.message;
-        //         console.log(errorCode, errorMessage)
-        //         // ..
-        //       });
-        //     //return false;
-        //   });
       });
   }
 </script>
